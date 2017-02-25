@@ -15,22 +15,7 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 	
-	/*$("#login").submit(function(e){
-	    return false;
-	});
 	
-	
-   $("#loginButton").click(function(e){
-      
-	   var emailID=$("input#emailID").val();
-       var password=$("input#password").val();
-           
-           
-        if(emailID=="" || password=="")
-        	{
-        		alert("Please fill all the fields");
-        	}
-   });*/
    
   $("#create_account").click(function(e){
           
@@ -39,6 +24,14 @@ $(document).ready(function() {
            var emailID=$("input#emailID").val();
            var re_email=$("input#re_email").val();
            var password=$("input#password").val();
+           
+          // var e = document.getElementById("day");
+           //var day1 = e.options[e.selectedIndex].text;
+           var day1=$( "#day option:selected" ).text();
+           var month1=$("#month option:selected").text();
+           var year1=$("#year option:selected").text();
+         
+           var mydob=(day1+month1).toString();
            
            var atpos = emailID.indexOf("@");
            var dotpos = emailID.lastIndexOf(".");
@@ -68,9 +61,9 @@ $(document).ready(function() {
         {
         	//make REST call here using ajax jquery
         	var obj = { emailID:emailID,password:password,fname:firstName,
-        			lname:lastName};  
+        			lname:lastName,date:mydob};  
         	var myJSON = JSON.stringify(obj);
-		//	document.write(myJSON);
+			//document.write(myJSON);
             
         console.log('add new user');
     $.ajax({
@@ -80,10 +73,21 @@ $(document).ready(function() {
         dataType: 'json',
         data: myJSON,
         success: function(data, textStatus, jqXHR){
-            alert("succes done");
+            //alert("succes done");
+            //alert(data);
+            if(data==true)
+            {
+            	alert(data);
+            	window.location.replace("timeLine.html");	
+            }
+            else
+            {
+            	alert(data);
+            	alert("Signup failed..emailID already exists. ")
+            	window.location.replace("appHome.html");
+            }	
 
-            //window.location.ref="timeLine.html";
-            window.location.replace("timeLine.html");
+            
         },
         error: function(jqXHR, textStatus, errorThrown){
             alert('add user error: ' + textStatus);

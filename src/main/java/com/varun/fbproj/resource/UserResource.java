@@ -29,20 +29,20 @@ public class UserResource {
     public boolean addUser(User user) throws JsonParseException, JsonMappingException, IOException{
 		
 		System.out.println("Inside sign up resource");
-		//System.out.println(user.getFname());
+		System.out.println("my dob = "+user.getDate());
 		//String output = "POST:Jersey say : " + msg;
 		user.setEmailID(user.getEmailID());
 		user.setPassword(user.getPassword());
 		user.setFname(user.getFname());
 		user.setLname(user.getLname());
+		user.setDate(user.getDate());
 		
-		if(s1.addUserService(user))
+		if(s1.checkEmailAlreadyUsed(user.getEmailID()))
 		{
-			return true;
-			
-			/*do logic for email check here*/
+			return (s1.addUserService(user));
 			
 		}
+		
 		else
 		{	
 		return false;
