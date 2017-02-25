@@ -19,16 +19,17 @@ public class SignUpService {
             	check=connect.start();
             	System.out.println("trying connection");
             }
-            String query = "insert into User(emailID,password) values (?,?)";
+            String query = "insert into User(emailID,password,fname,lname) values (?,?,?,?)";
             PreparedStatement ps = connect.con.prepareStatement(query);
            
 			ps.setString(1,u1.getEmailID());
 			ps.setString(2,u1.getPassword());
+			ps.setString(3, u1.getFname());
+			ps.setString(4, u1.getLname());
             ps.executeUpdate();
-            PreparedStatement prepStatement = connect.con.prepareStatement("select userID from user where emailID = ? ");
+            
+            PreparedStatement prepStatement = connect.con.prepareStatement("select userID from User where emailID = ? ");
 			prepStatement.setString(1,u1.getEmailID());
-			
-
 			ResultSet result = prepStatement.executeQuery();
 			if (result != null) {
 				while (result.next()) {

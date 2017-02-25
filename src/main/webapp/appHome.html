@@ -40,62 +40,58 @@ $(document).ready(function() {
            var re_email=$("input#re_email").val();
            var password=$("input#password").val();
            
-        /*if(firstName=="" || lastName=="" || emailID=="" ||re_email=="" || password=="")
+           var atpos = emailID.indexOf("@");
+           var dotpos = emailID.lastIndexOf(".");
+                      
+           
+        if(firstName=="" || lastName=="" || emailID=="" ||re_email=="" || password=="")
         	{
         		alert("Please fill all the fields");
+        		window.location.replace("appHome.html");
         	}
+        else  if (atpos<1 || dotpos<atpos+2 || dotpos+2>=emailID.length) {
+            alert("Not a valid e-mail address.");
+            window.location.replace("appHome.html");
+            
+     	   }
         else if(emailID != re_email)
         	{
         	     alert("email and confirm email do not match");
+        	     window.location.replace("appHome.html");
         	}
-        else*/
-        //{
+        else if((password.length)<5)
+    	{
+    	   alert("Password should be minimum 6 characters.");
+    	   window.location.replace("appHome.html");
+    	}
+        else
+        {
         	//make REST call here using ajax jquery
         	var obj = { emailID:emailID,password:password,fname:firstName,
         			lname:lastName};  
         	var myJSON = JSON.stringify(obj);
-			document.write(myJSON);
-            //make the AJAX request, dataType is set to json
-            //meaning we are expecting JSON data in response from the server
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/DemoFB/webapi/user/signup",
-                data: myJSON,
-                contentType : "application/json",
-                dataType: "json",
-                crossDomain: true,
-                processData: true,
-                
-                //if received a response from the server
-                 success:function(resp) {
-                	// we have the response  
-                     if(resp!=null){
-                    	 alert("success");
-                    	   var obj = JSON.parse(JSON.stringify(resp));
-                    	  //$.cookie("ID", obj.userID);
-                    	 //  $.cookie("emailID", $("#emailID").val());
-                      // $.cookie("pwd1", $("#pwd1").val());
-                     window.location.href = "timeLine.html";
-                     //alert("Server said123:\n '" + resp + "'");}
-                 }
-                     else
-                  	   {
-                    	 alert("failure");
-                  	   
-                  	   window.location.href = "signup.html";
-                  	   }
-                     },
-                   
-                //If there was no resonse from the server
-                error: function(jqXHR, textStatus, errorThrown){
-                     console.log("Something really bad happened here" + textStatus);
-                      $("#ajaxResponse").html(jqXHR.responseText);
-                }
-      
-            });
+		//	document.write(myJSON);
+            
+        console.log('add new user');
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url:"http://localhost:8080/DemoFB/webapi/user/signup",
+        dataType: 'json',
+        data: myJSON,
+        success: function(data, textStatus, jqXHR){
+            alert("succes done");
+
+            //window.location.ref="timeLine.html";
+            window.location.replace("timeLine.html");
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert('add user error: ' + textStatus);
+        }
+    });
+           	
         	
-        	
-       // }	//else ends
+        }	//else ends
    });
 });
 </script>
@@ -131,7 +127,7 @@ $(document).ready(function() {
 		</br>
 		<input type="text" class="form-control" placeholder="Re-enter email " id="re_email" style="margin-top:10px; width:400px">
 		</br>
-		<input type="text" class="form-control" placeholder="Password" id="password" style="margin-top:10px; width:400px">
+		<input type="password" class="form-control" placeholder="Password" id="password" style="margin-top:10px; width:400px">
 		</br>
 	               
 		<h4 style="margin-top:15px">Birthday</h4>
