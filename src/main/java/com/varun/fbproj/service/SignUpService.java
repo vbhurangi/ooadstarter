@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.varun.fbproj.model.User;
-
 public class SignUpService {
 	
 	public boolean checkEmailAlreadyUsed(String email1)

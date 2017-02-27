@@ -6,19 +6,19 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="http://cryptojs.altervista.org/api/functions_cryptography.js"></script> 
+<script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.cookie/1.3.1/jquery.cookie.js"></script>  
+
+
 <script type="text/javascript">
+
+
+
 $(document).ready(function() {
 	
-	
-	//prevent form default action
-	$("#signup").submit(function(e){
-		e.preventDefault();
-	});
-	
-	
-   
   $("#create_account").click(function(e){
-          
+	
            var firstName=$("input#firstname").val();
            var lastName=$("input#lastname").val();
            var emailID=$("input#emailID").val();
@@ -60,6 +60,7 @@ $(document).ready(function() {
         else
         {
         	//make REST call here using ajax jquery
+        	//localStorage.setItem('token', token);
         	var obj = { emailID:emailID,password:password,fname:firstName,
         			lname:lastName,date:mydob};  
         	var myJSON = JSON.stringify(obj);
@@ -68,14 +69,30 @@ $(document).ready(function() {
         console.log('add new user');
     $.ajax({
         type: "POST",
-        contentType: "application/json",
+        contentType: "application/json",  //send data to server in this format
         url:"http://localhost:8080/DemoFB/webapi/user/signup",
-        dataType: 'json',
+        dataType: "text",  //expect response of this type
         data: myJSON,
-        success: function(data, textStatus, jqXHR){
+        success: function(resp){
             //alert("succes done");
             //alert(data);
-            if(data==true)
+            
+            if(resp!=null){
+            			
+                    	 alert(resp);
+                    	  // var obj = JSON.parse(JSON.stringify(resp));
+                    	   window.location.replace("timeLine.html");
+                    	   $.cookie("ID",resp);
+                    	   // $.cookie("myToken",resp);
+                    	  
+            }	
+            else
+            {
+            	alert("Signup failed..emailID already exists. ")
+            	window.location.replace("appHome.html");
+            }	
+            
+            /*if(data==true)
             {
             	alert(data);
             	window.location.replace("timeLine.html");	
@@ -85,7 +102,7 @@ $(document).ready(function() {
             	alert(data);
             	alert("Signup failed..emailID already exists. ")
             	window.location.replace("appHome.html");
-            }	
+            }*/
 
             
         },
