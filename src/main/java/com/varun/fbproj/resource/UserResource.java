@@ -134,7 +134,7 @@ assertEquals(scope, "self groups/admins");
 	
 	
 	
-	@POST
+	@DELETE
     @Path("/logout")
 	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.TEXT_PLAIN})
@@ -148,7 +148,8 @@ assertEquals(scope, "self groups/admins");
 			    System.out.println("Expiration: " + claims.getExpiration());
 			  String emailID=claims.getSubject();
 		if(LogoutService.logoutUserService(emailID))
-		{
+		{	
+			System.out.println("logout done in resource");
 			return "logout_success";
 		}
 		return null;
