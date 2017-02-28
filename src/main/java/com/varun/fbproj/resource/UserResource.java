@@ -1,5 +1,7 @@
 package com.varun.fbproj.resource;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,6 +25,8 @@ import java.util.*;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.*;
 import com.varun.fbproj.model.User;
+import com.varun.fbproj.service.LoginService;
+import com.varun.fbproj.service.LogoutService;
 import com.varun.fbproj.service.SignUpService;
 import com.varun.fbproj.service.TokenService;
 
@@ -107,6 +111,49 @@ assertEquals(scope, "self groups/admins");
 	
 		return jwt;
 	}
+	
+	
+	@POST
+    @Path("/login")
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.TEXT_PLAIN})
+    public String userLogin(User user_obj) throws JsonParseException, JsonMappingException, IOException{
+	
+		if(LoginService.loginUserService(user_obj))
+		{
+			System.out.println("retrun id is "+user_obj.getUserID());
+			String token= createJWT(user_obj.getEmailID());
+	           System.out.println("jwt is == "+ token); 
+	           TokenService.set_token(token, user_obj);
+	           return token;
+		}
+		
+		return null;
+
+	}//loginuser method ends here
+	
+	
+	
+	@POST
+    @Path("/logout")
+	@Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.TEXT_PLAIN})
+    public String userLogout(String jwt) throws JsonParseException, JsonMappingException, IOException{
+		
+		System.out.println("Inside logout resource");
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    System.out.println("Expiration: " + claims.getExpiration());
+			  String emailID=claims.getSubject();
+		if(LogoutService.logoutUserService(emailID))
+		{
+			return "logout_success";
+		}
+		return null;
+	}//logout method ends here
+	
 	
 
 	
