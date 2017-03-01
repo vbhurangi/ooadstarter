@@ -4,7 +4,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -27,8 +30,10 @@ import com.google.gson.*;
 import com.varun.fbproj.model.User;
 import com.varun.fbproj.service.LoginService;
 import com.varun.fbproj.service.LogoutService;
+import com.varun.fbproj.service.RetriveService;
 import com.varun.fbproj.service.SignUpService;
 import com.varun.fbproj.service.TokenService;
+import com.varun.fbproj.service.UpdateService;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -80,16 +85,7 @@ public class UserResource {
 	}//adduser method ends here
 	
 	
-	/*  validation of token
-	 * String jwt = <jwt passed in from above>
-Jws<Claims> claims = Jwts.parser()
-  .setSigningKey("secret".getBytes("UTF-8"))
-  .parseClaimsJws(jwt)
-String scope = claims.getBody().get("scope")
-assertEquals(scope, "self groups/admins");
-	 * */
-	
-	//Sample method to construct a JWT
+	// method to construct a JWT
 	private String createJWT(String emailID) {
 	 
 		String jwt="";
@@ -154,6 +150,61 @@ assertEquals(scope, "self groups/admins");
 		}
 		return null;
 	}//logout method ends here
+	
+	
+	
+	@PUT
+    @Path("/updateAllData")
+	@WebMethod(operationName = "update")
+	@Consumes({MediaType.APPLICATION_JSON})
+    public boolean updateUser(User user,@CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException{
+	
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			    System.out.println("Expiration: " + claims.getExpiration());
+			  String emailID=claims.getSubject();
+		
+		user.setEmailID(emailID);
+		
+		user.setMob_no(user.getMob_no());
+		user.setCollege(user.getCollege());
+		user.setPlaceOfWork(user.getPlaceOfWork());
+		user.setHometown(user.getHometown());
+		user.setCityOfWork(user.getCityOfWork());
+		user.setHighschool(user.getHighschool());
+		user.setDate(user.getDate());
+		
+		if(UpdateService.UpdateUserService(user))
+		{
+			return true;
+		}
+		return false;
+       
+	}//Updateuser method ends here
+	
+	
+    @GET
+    @Path("/retrive")
+    @Consumes({MediaType.TEXT_PLAIN})
+	@Produces({MediaType.APPLICATION_JSON})
+    public User retrive(String jwt) throws JsonParseException, JsonMappingException, IOException 
+    {
+    	
+    	System.out.println("Inside retrive method ");
+    	System.out.println("jwt string ="+ jwt);
+    	Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+    	System.out.println("Subject: " + claims.getSubject());	
+		String emailID=claims.getSubject();		
+		User u1= RetriveService.getUserAllData(emailID);
+	
+		return u1;
+	 
+    }//retrive method ends here
 	
 	
 

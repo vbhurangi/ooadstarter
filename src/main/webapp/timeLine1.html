@@ -12,11 +12,125 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	
+	var x=$.cookie("ID");
+	//document.write(x);
 	$("#logoutForm").submit(function(e){
 	        e.preventDefault();
 	 });
+	
+
+	$("#inviteButton").click(function(e){
+		window.location.replace("todoPage.html");
+	 });
+
+	$("#closeFriend").click(function(e){
+		window.location.replace("todoPage.html");
+	 });
+
+	$("#acq").click(function(e){
+		window.location.replace("todoPage.html");
+	 });
+
+	$("#family").click(function(e){
+		window.location.replace("todoPage.html");
+	 });
+
+	$("#restricted").click(function(e){
+		window.location.replace("todoPage.html");
+	 });
+	$("#suggestedPages").click(function(e){
+		window.location.replace("todoPage.html");
+	 });
+	$("#addMessage").click(function(e){
+		window.location.replace("todoPage.html");
+	 });
+	/*var foo1 = $.cookie("ID");
+             	$.ajax({
+             		   type: "GET",
+	                   url: "http://localhost:8080/DemoFB/webapi/user/retrive",
+	                   dataType: "json",
+	                   contentType : "text/plain",
+	                   data:foo1,
+	                   
+                       success: function(response){  
+	                       // we have the response  
+	                       if(response!=null){
+	                    	   alert("data fetched");
+	                    	  // var obj = JSON.parse(JSON.stringify(response));
+	                          // document.getElementById("line1").innerHTML= "User Name:"+obj.emailID;
+	                           //document.getElementById("line2").innerHTML= "Your Name:"+obj.name;
+	                           //document.getElementById("line3").innerHTML= "Home Town:"+obj.town;
+	                           //document.getElementById("line4").innerHTML= "Date of birth:"+obj.date;
+	                           
+	                           
+	                           
+	                       }  
+	                       
+	                       else
+	                    	   {
+	                    	  	alert("data cannot be fetched");
+	                    	   }
+	                     },
+	    	    
+	          			error: function(e){  
+	            					alert('Error121212: ' + e);  
+	            					alert(e.toString());
+	          			}				
+	            
+	    	  }); *///ajax call ends here*/
+	       
+	    
+	    	  $("#updateDetails").click(function(e){
+	    		  
+	              var mob_no=$("input#mob_no").val();
+	              var college=$("input#collge").val();
+	              var placeOfWork=$("input#workplace").val();
+	              var hometown=$("input#hometown").val();
+	              var cityOfWork=$("input#workcity").val();
+	              var highschool=$("input#highschool").val();
+	              
+	              var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
+	            		  hometown:hometown,cityOfWork:cityOfWork,highschool
+	            		  };  
+	          	var myJSON = JSON.stringify(obj);
+	              	
+	    				//document.write(myJSON);
+	    	    $.ajax({
+	    	        type: "PUT",
+	    	        contentType: "application/json",  //send data to server in this format
+	    	        url:"http://localhost:8080/DemoFB/webapi/user/updateAllData",
+	    	        dataType: "text",  //expect response of this type
+	    	        data: myJSON,
+	    	        success: function(resp){
+	    	            
+	    	            if(resp!=null){
+	    	   	                    	 alert("update success");
+	    	                    	  // var obj = JSON.parse(JSON.stringify(resp));
+	    	                    	   //window.location.replace("timeLine1.html");
+	    	                    	  
+	    	            }	
+	    	            else
+	    	            {
+	    	            	alert("update failed.. ")
+	    	            	window.location.replace("timeLine1.html");
+	    	            }	
+	    	            
+
+	    	            
+	    	        },
+	    	        error: function(jqXHR, textStatus, errorThrown){
+	    	            alert('logout error: ' + textStatus);
+	    	        }
+	    	    });
+	    	           	
+	    	        	
+	    	       
+	    	   });//update button ends ends
+	    	  
+	    	  
+	    	  
+	
+	
 	
 	
 	  $("#logoutButton1").click(function(e){
@@ -58,7 +172,7 @@ $(document).ready(function() {
 	        	
 	       
 	   });//logout button ends ends
-	});
+	});//document ready ends
 
 </script>
 
@@ -107,7 +221,7 @@ $(document).ready(function() {
         <img src="img_avatar1.png" class="media-object" style="width:60px">
       </div>
       <div class="media-body">
-        <h4 class="media-heading">Varun Jaiswal</h4>
+        <h4 class="media-heading" id="name">Varun Jaiswal</h4>
         <p>my other details...</p>
       </div>
     </div>
@@ -153,7 +267,7 @@ $(document).ready(function() {
           <input type="text" class="form-control" id="highschool" style="margin-left:10px;">
         </div>
              </br>
-        <input type="button" id = "updateDetails" class="btn btn-primary" value="Update Info" style="height:30px; width:10%;">
+        <input type="button" id ="updateDetails" class="btn btn-primary" value="Update Info" style="height:30px; width:10%;">
 
     </div>
     </form>
@@ -184,10 +298,10 @@ $(document).ready(function() {
     <div class="row">
         <div class="col-xs-12">
         <div class="container">
-          <button type="button" class="btn btn-primary">Close friends</button></br>
-          <button type="button" class="btn btn-primary">Acquaintances</button></br>
-          <button type="button" class="btn btn-primary">Family</button></br>
-          <button type="button" class="btn btn-primary">Restricted</button></br>
+          <button type="button" class="btn btn-primary" id="closeFriend">Close friends</button></br>
+          <button type="button" class="btn btn-primary" id="acq">Acquaintances</button></br>
+          <button type="button" class="btn btn-primary" id="family">Family</button></br>
+          <button type="button" class="btn btn-primary" id="restricted">Restricted</button></br>
 
         </div>
         </div>
@@ -222,7 +336,7 @@ $(document).ready(function() {
      <form class="navbar-form navbar-left" action="#" id="suggestedPages">
     <div class="container">
 
-    <button type="button" class="btn btn-primary" >See pages Suggested</button>
+    <button type="button" class="btn btn-primary" id="suggestedPages" >See pages Suggested</button>
 
     </div>
     </form>
@@ -294,7 +408,7 @@ $(document).ready(function() {
     <form class="navbar-form navbar-left" action="#" id="suggestions">
     <div class="container">     
 
-           <button type="button" class="btn btn-primary" >Invites</button>
+           <button type="button" class="btn btn-primary" id="inviteButton" >Invites</button>
     </div>
     </form>
 
@@ -323,7 +437,7 @@ $(document).ready(function() {
     <form class="navbar-form navbar-left" action="#" id="messenger">
     <div class="container">     
 
-      <button type="button" class="btn btn-primary" >Add message</button>
+      <button type="button" class="btn btn-primary" id="addMessage">Add message</button>
     </div>
     </form>
 

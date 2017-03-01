@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	
+	$("#todoForm").submit(function(e){
+	        e.preventDefault();
+	 });
+	
+
+	$("#backButton").click(function(e){
+		window.location.replace("timeLine1.html");
+	 });
+	
+	
+
+	});
+
+</script>
+
+
+
+</head>
+<body style="background-color:#e1e8ed">
+<nav class="navbar navbar-default" style="background-color:#3b5998; min-height:80px;">
+  <div class="container-fluid">
+    <form class="navbar-form navbar-left" >
+        <div class="form-group">
+          <img src="Facebook-logo.jpg" alt="facebook_logo" width="200" height="100" style="margin-left:200px">
+        </div>
+      </form>
+	<h3>Site under construction</h3>
+     <form class="navbar-form navbar-right" id="todoForm"">   
+        <button type="submit" id="backButton" class="btn btn-default" style="margin-top:40px">Back</button>
+      </form>
+    </div>
+
+</nav>
+</body>
+</html>

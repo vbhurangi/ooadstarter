@@ -11,12 +11,16 @@ public class User {
 		private String password;
 		private String fname;
 		private String lname;
-		private Date dob;  //this date we are not using i think
 		private String date;
 		private String pic;
 		private String mob_no;
-		private String town;
 		private String college;
+		private String placeOfWork;
+		private String hometown;
+		private String cityOfWork;
+		private String highschool;
+		
+		
 		
 		private String user_token;
 		
@@ -27,8 +31,11 @@ public class User {
 
 
 		public User(int userID,String emailID,String password,
-				String fname,String lname,Date dob,String date,String pic,
-				String mob_no,String town,String college,String user_token
+				String fname,String lname,String date,String pic,
+				String mob_no,String college,
+				String placeOfWork,String hometown,
+				String cityOfWork,String highschool,			
+				String user_token
 				) {
 			super();
 			this.userID=userID;
@@ -36,12 +43,14 @@ public class User {
 			this.password = password;
 			this.fname = fname;
 			this.lname=lname;
-			this.dob = dob;
 			this.date=date;
 			this.pic = pic;
 			this.mob_no=mob_no;
-			this.town = town;
 			this.college=college;
+			this.placeOfWork=placeOfWork;
+			this.hometown = hometown;
+			this.cityOfWork=cityOfWork;
+			this.highschool=highschool;
 			this.user_token=user_token;
 		}
 
@@ -96,14 +105,6 @@ public class User {
 		}
 
 
-		public Date getDob() {
-			return dob;
-		}
-
-
-		public void setDob(Date dob) {
-			this.dob = dob;
-		}
 
 		@JsonProperty(value = "date")
 		public String getDate() {
@@ -135,15 +136,6 @@ public class User {
 			this.mob_no = mob_no;
 		}
 
-		@JsonProperty(value = "town")
-		public String getTown() {
-			return town;
-		}
-
-
-		public void setTown(String town) {
-			this.town = town;
-		}
 
 		@JsonProperty(value = "college")
 		public String getCollege() {
@@ -163,6 +155,46 @@ public class User {
 
 		public void setUser_token(String user_token) {
 			this.user_token = user_token;
+		}
+
+
+		public String getPlaceOfWork() {
+			return placeOfWork;
+		}
+
+
+		public void setPlaceOfWork(String placeOfWork) {
+			this.placeOfWork = placeOfWork;
+		}
+
+
+		public String getHometown() {
+			return hometown;
+		}
+
+
+		public void setHometown(String hometown) {
+			this.hometown = hometown;
+		}
+
+
+		public String getCityOfWork() {
+			return cityOfWork;
+		}
+
+
+		public void setCityOfWork(String cityOfWork) {
+			this.cityOfWork = cityOfWork;
+		}
+
+
+		public String getHighschool() {
+			return highschool;
+		}
+
+
+		public void setHighschool(String highschool) {
+			this.highschool = highschool;
 		}
 
 
