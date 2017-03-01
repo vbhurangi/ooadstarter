@@ -39,6 +39,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
+
 @WebService()
 @Path("/user")
 public class UserResource {

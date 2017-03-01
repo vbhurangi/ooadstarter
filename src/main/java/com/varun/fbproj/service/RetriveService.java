@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import com.varun.fbproj.model.User;
 
 public class RetriveService {
-
+	//this method is to get ALL user data on personal info update page
 	public static User getUserAllData(String emailID)
 	{
 		

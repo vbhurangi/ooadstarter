@@ -35,8 +35,6 @@ $(document).ready(function() {
 	
 	$("#logoutButton1").click(function(e){
 		  var foo = $.cookie("ID");
-	
-				//document.write(myJSON);
 	    $.ajax({
 	        type: "DELETE",
 	        contentType: "text/plain",  //send data to server in this format
