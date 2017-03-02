@@ -94,10 +94,7 @@ public class FriendResource {
 			ArrayList<User> temp=new ArrayList<User>();
 			temp=GetMyAllFriends.getMyFriends(temp,e1);
 			System.out.println("temp before="+temp);
-			/*User u22=new User();
-			u22=RetriveService.getUserAllData(myEmailID);
-			temp.remove(u22);
-			*/
+			
 			Iterator<User> iter = temp.iterator();
 			while (iter.hasNext()) 
 			{
@@ -107,11 +104,8 @@ public class FriendResource {
 			        //Use iterator to remove this User object.
 			        iter.remove();
 			    }
-			}
-					
+			}					
 			System.out.println("temp after="+temp);
-			
-			int flag=0;
 			for(int j=0;j<temp.size();j++)
 			{
 				String e2=temp.get(j).getEmailID();
@@ -122,10 +116,7 @@ public class FriendResource {
 					User u1=new User();
 					u1=RetriveService.getUserAllData(e2);
 					al_mutual_friends.add(u1);
-				}
-				
-				
-				
+				}			
 			}//for loop j wala end
 			
 		}//for loop i wala end

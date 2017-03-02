@@ -175,7 +175,7 @@ public class UserResource {
 		user.setCityOfWork(user.getCityOfWork());
 		user.setHighschool(user.getHighschool());
 		user.setDate(user.getDate());
-		System.out.println("college ="+user.getHometown());
+		//System.out.println("college ="+user.getHometown());
 		if(UpdateService.UpdateUserService(user))
 		{
 			return true;
