@@ -197,6 +197,24 @@ public class User {
 			this.highschool = highschool;
 		}
 
+/*		@Override
+		    public boolean equals(Object obj) {
+		        return (this.password.equals(((User) obj).password) && 
+		        		(this.emailID.equals(((User) obj).emailID)) &&
+		                (this.fname.equals(((User) obj).fname)) &&
+		                (this.lname.equals(((User) obj).lname))&&
+		                (this.date.equals(((User) obj).date))&&
+		                (this.pic.equals(((User) obj).pic))&&
+		                (this.college.equals(((User) obj).college))&&
+		                (this.mob_no.equals(((User) obj).mob_no))&&
+		                (this.placeOfWork.equals(((User) obj).placeOfWork))&&
+		                (this.hometown.equals(((User) obj).hometown))&&
+		                (this.highschool.equals(((User) obj).highschool))&&
+		                (this.cityOfWork.equals(((User) obj).cityOfWork))
+		                
+		        		);
+		    }
+*/
 
 	
 }//class ends here

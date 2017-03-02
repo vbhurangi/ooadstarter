@@ -25,6 +25,7 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.*;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.*;
 import com.varun.fbproj.model.User;
@@ -39,7 +40,6 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-
 @WebService()
 @Path("/user")
 public class UserResource {
