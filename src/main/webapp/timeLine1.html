@@ -83,18 +83,18 @@ $(document).ready(function() {
 	    	  $("#updateDetails").click(function(e){
 	    		  
 	              var mob_no=$("input#mob_no").val();
-	              var college=$("input#collge").val();
+	              var college=$("input#college").val();
 	              var placeOfWork=$("input#workplace").val();
 	              var hometown=$("input#hometown").val();
 	              var cityOfWork=$("input#workcity").val();
 	              var highschool=$("input#highschool").val();
 	              
 	              var obj = { mob_no:mob_no,college:college,placeOfWork:placeOfWork,
-	            		  hometown:hometown,cityOfWork:cityOfWork,highschool
+	            		  hometown:hometown,cityOfWork:cityOfWork,highschool:highschool
 	            		  };  
 	          	var myJSON = JSON.stringify(obj);
 	              	
-	    				//document.write(myJSON);
+	    			//document.write(myJSON);
 	    	    $.ajax({
 	    	        type: "PUT",
 	    	        contentType: "application/json",  //send data to server in this format

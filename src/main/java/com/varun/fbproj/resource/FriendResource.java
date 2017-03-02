@@ -34,7 +34,7 @@ public class FriendResource {
     public static ArrayList<User> getAllMyFriend(@CookieParam("ID") String jwt
     		) throws JsonParseException, JsonMappingException, IOException{
 	
-		
+		System.out.println("inside get my all friends");
 		System.out.println("jwt="+ jwt);
 		Claims claims = Jwts.parser()         
 			       .setSigningKey("secret".getBytes("UTF-8"))
