@@ -20,7 +20,7 @@ public class GetMyAllFriends {
 	            	check=connect.start();
 	            	System.out.println("trying connection");
 	            }
-	            
+	           // "select * from UserFriends where myEmailID="varun@gmail.com" and status="Accepted""
 				PreparedStatement prepStatement = connect.con.prepareStatement("select * from UserFriends "
 						+ "where myEmailID = ? and status=?");
 				prepStatement.setString(1,myEmailID);
@@ -42,7 +42,7 @@ public class GetMyAllFriends {
 				e.printStackTrace();
 			}
 
-		
+		System.out.println("Friend list="+al_friends);
 		return al_friends;
 	}
 }//class ends here
