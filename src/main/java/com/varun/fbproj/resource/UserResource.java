@@ -137,9 +137,7 @@ public class UserResource {
     public String userLogout(String jwt) throws JsonParseException, JsonMappingException, IOException{
 		
 		System.out.println("Inside logout resource");
-		Claims claims = Jwts.parser()         
-			       .setSigningKey("secret".getBytes("UTF-8"))
-			       .parseClaimsJws(jwt).getBody();
+		Claims claims = Jwts.parser().setSigningKey("secret".getBytes("UTF-8")).parseClaimsJws(jwt).getBody();
 			    System.out.println("Subject: " + claims.getSubject());
 			    System.out.println("Expiration: " + claims.getExpiration());
 			  String emailID=claims.getSubject();
@@ -190,7 +188,7 @@ public class UserResource {
     @Path("/retrive")
     @Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.APPLICATION_JSON})
-    public User retrive(String jwt) throws JsonParseException, JsonMappingException, IOException 
+    public User retrive(@CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException 
     {
     	
     	System.out.println("Inside retrive method ");
