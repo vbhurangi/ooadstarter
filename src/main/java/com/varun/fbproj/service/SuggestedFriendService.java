@@ -3,6 +3,7 @@ package com.varun.fbproj.service;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.varun.fbproj.model.User;
 
@@ -38,29 +39,32 @@ public class SuggestedFriendService {
 					}
 				}//if ends	
 				
-				/*if (result .next()) {
-					while (result.next()) {
 				
-					String e1=result.getString("emailID");
+				for(int j=0;j<al_friends.size();j++)
+				{
+					String e2=al_friends.get(j).getEmailID();
+					System.out.println("e2="+e2);
+					if(IsMyFriendService.isMyFriend(myEmailID, e2))
+					{
+						System.out.println("already a friend. so dont suggest this to me");
+						
+						Iterator<User> iter = al_friends.iterator();
+						while (iter.hasNext()) 
+						{
+						    User user = iter.next();
+						    if(user.getEmailID().equals(e2))
+						    {
+						        //Use iterator to remove this User object.
+						        iter.remove();
+						    }
+						}
+						
+					}
 					
-					PreparedStatement ps1 = connect.con.prepareStatement("select u2.friendEmailID from User u1,UserFriends u2 where u1.emailID=? and u2.friendEmailID=? and u1.emailID!=u2.friendEmailID and u2.myEmailID=u1.emailID and u2.status not like 'Accepted' ");
-					ps1.setString(1,myEmailID);
-					ps1.setString(2,e1);
 					
-					ResultSet result1 = prepStatement.executeQuery();
-				
-		             if(result1.next()) {
-		            	 while (result1.next()) {
-		                System.out.println("suggest this friend. Not a friend already");
-		            	String e3=result1.getString("friendEmailID");
-		            	User u_obj=new User();	
-						u_obj=RetriveService.getUserAllData(e3);				
-						//adding user objects of my suggested to arraylist
-						al_friends.add(u_obj);
-		               }//inner while ends
-		            }//inner if ends 	
-				}
-			  }	//if ends	*/
+					
+				}//for loop j wala end
+			
 				connect.stop();
 			} catch (Exception e) {
 				e.printStackTrace();
