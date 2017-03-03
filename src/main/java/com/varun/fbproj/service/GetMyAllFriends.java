@@ -20,11 +20,11 @@ public class GetMyAllFriends {
 	            	check=connect.start();
 	            	System.out.println("trying connection");
 	            }
-	           // "select * from UserFriends where myEmailID="varun@gmail.com" and status="Accepted""
-				PreparedStatement prepStatement = connect.con.prepareStatement("select * from UserFriends "
-						+ "where myEmailID = ? and status=?");
-				prepStatement.setString(1,myEmailID);
-				prepStatement.setString(2,"Accepted");
+	           
+				PreparedStatement prepStatement = connect.con.prepareStatement("select friendEmailID from UserFriends "
+						+ "where myEmailID like ? and status like ?");
+				prepStatement.setString(1,"%"+myEmailID+"%");
+				prepStatement.setString(2,"%Accepted%");
 				
 				ResultSet result = prepStatement.executeQuery();
 				if (result .next()) {

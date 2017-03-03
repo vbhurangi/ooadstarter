@@ -85,7 +85,8 @@ $("#loginForm").submit(function(e){
             			
                     	 alert(resp);
                     	  // var obj = JSON.parse(JSON.stringify(resp));
-                    	   window.location.replace("timeLine1.html");
+                    	  // window.location.replace("timeLine1.html");
+                    	  window.location.replace("userHome1.html");
                     	   $.cookie("ID",resp);
                     	   // $.cookie("myToken",resp);
                     	  
@@ -140,14 +141,15 @@ $("#loginForm").submit(function(e){
                 	  alert(resp);
                 	  $.cookie("ID",resp);
                 	  // var obj = JSON.parse(JSON.stringify(resp));
-                	   window.location.replace("timeLine1.html");
+                	   //window.location.replace("timeLine1.html");
+                	  window.location.replace("userHome1.html");
                 	   
                  }
                   else
                	   {
                	   alert("login failed.. incorrect username or password.. try again");
                	   $.removeCookie("ID");
-               	   window.location.replace = "appHome.html";
+               	   window.location.replace("appHome.html");
                	   }
                 },  
                 error: function(e){  
