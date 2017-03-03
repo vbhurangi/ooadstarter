@@ -65,11 +65,23 @@ public class FriendRequestResource {
     @Path("/confirmRequest")
 	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.TEXT_PLAIN})
-    public static void confirmFriendRequest(@CookieParam("ID") String jwt,String friendEmailID
+    public static String confirmFriendRequest(@CookieParam("ID") String jwt,String friendEmailID
     		) throws JsonParseException, JsonMappingException, IOException{
 		
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			   // System.out.println("Expiration: " + claims.getExpiration());
+			  String myEmailID=claims.getSubject();
 		
-		
+			  FriendRequestService.updateOldRequest(myEmailID, friendEmailID);
+			  if(FriendRequestService.confirmFriendRequest(myEmailID, friendEmailID))
+				{
+					return "Request accepted";
+				}
+				return "Request rejected";
 		
 	}//method ends here
 	
@@ -77,12 +89,22 @@ public class FriendRequestResource {
     @Path("/deleteRequest")
 	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.TEXT_PLAIN})
-    public static void deleteFriendRequest(@CookieParam("ID") String jwt,String friendEmailID
+    public static String deleteFriendRequest(@CookieParam("ID") String jwt,String friendEmailID
     		) throws JsonParseException, JsonMappingException, IOException{
 		
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			   // System.out.println("Expiration: " + claims.getExpiration());
+			  String myEmailID=claims.getSubject();
 		
-		
-		
+		if(FriendRequestService.deleteFriendRequest(myEmailID, friendEmailID))
+		{
+			return "Request deleted successfully";
+		}
+		return "Request deletion failed";
 	}//method ends here
 	
 	
@@ -93,8 +115,15 @@ public class FriendRequestResource {
     		) throws JsonParseException, JsonMappingException, IOException{
 		//it returns all friend requests which came to me
 		ArrayList<User> al_requestList=new ArrayList<User>();
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			   // System.out.println("Expiration: " + claims.getExpiration());
+			  String myEmailID=claims.getSubject();	
 		
-		return al_requestList;
+		return FriendRequestService.getAllFriendRequest(myEmailID, al_requestList);
 	}//method ends here
 	
 	
