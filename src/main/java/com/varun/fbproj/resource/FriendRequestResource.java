@@ -1,5 +1,8 @@
 package com.varun.fbproj.resource;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -16,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.varun.fbproj.model.User;
+import com.varun.fbproj.service.FriendRequestService;
 
 
 @WebService()
@@ -26,11 +30,21 @@ public class FriendRequestResource {
     @Path("/addFriend")
 	@Consumes({MediaType.TEXT_PLAIN})
 	@Produces({MediaType.TEXT_PLAIN})
-    public static void addFriendRequest(@CookieParam("ID") String jwt,String friendEmailID
+    public static String addFriendRequest(@CookieParam("ID") String jwt,String friendEmailID
     		) throws JsonParseException, JsonMappingException, IOException{
 		
-		
-		
+		System.out.println("jwt="+ jwt);
+		Claims claims = Jwts.parser()         
+			       .setSigningKey("secret".getBytes("UTF-8"))
+			       .parseClaimsJws(jwt).getBody();
+			    System.out.println("Subject: " + claims.getSubject());
+			   // System.out.println("Expiration: " + claims.getExpiration());
+			  String myEmailID=claims.getSubject();
+		if(FriendRequestService.addFriendRequest(myEmailID, friendEmailID))
+		{
+			return "Request sent";
+		}
+		return "Request not sent";
 		
 	}//method ends here
 	
