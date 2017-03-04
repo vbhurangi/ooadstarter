@@ -152,11 +152,12 @@ public class UserResource {
 	
 	
 	
+
 	@PUT
     @Path("/updateAllData")
 	@WebMethod(operationName = "update")
 	@Consumes({MediaType.APPLICATION_JSON})
-    public boolean updateUser(User user,@CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException{
+    public User updateUser(User user,@CookieParam("ID") String jwt) throws JsonParseException, JsonMappingException, IOException{
 	
 		System.out.println("jwt="+ jwt);
 		Claims claims = Jwts.parser()         
@@ -165,24 +166,28 @@ public class UserResource {
 			    System.out.println("Subject: " + claims.getSubject());
 			    System.out.println("Expiration: " + claims.getExpiration());
 			  String emailID=claims.getSubject();
+		User user1 = new User();
+		user1.setEmailID(emailID);
 		
-		user.setEmailID(emailID);
-		
-		user.setMob_no(user.getMob_no());
-		user.setCollege(user.getCollege());
-		user.setPlaceOfWork(user.getPlaceOfWork());
-		user.setHometown(user.getHometown());
-		user.setCityOfWork(user.getCityOfWork());
-		user.setHighschool(user.getHighschool());
-		user.setDate(user.getDate());
-		//System.out.println("college ="+user.getHometown());
-		if(UpdateService.UpdateUserService(user))
+
+		user1.setMob_no(user.getMob_no());
+		user1.setCollege(user.getCollege());
+		user1.setPlaceOfWork(user.getPlaceOfWork());
+		user1.setHometown(user.getHometown());
+		user1.setCityOfWork(user.getCityOfWork());
+		user1.setHighschool(user.getHighschool());
+		user1.setDate(user.getDate());
+				if(UpdateService.UpdateUserService(user1))
 		{
-			return true;
+			System.out.println(user1.getCollege());
+			System.out.println(user1.getHighschool());
+			return user1;
 		}
-		return false;
+		return user;
        
 	}//Updateuser method ends here
+	
+	
 	
 	
     @GET

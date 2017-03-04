@@ -32,6 +32,134 @@ $(document).ready(function() {
 	$("#findmyFriends").click(function(e){
 		window.location.replace("todoPage.html");
 	 });
+$(function () {
+	 	
+       	$.ajax({ 
+                   url: "http://localhost:8080/DemoFB/webapi/friend/suggestedFriends",
+                   type: "GET",
+                   dataType: "json",
+                   contentType : "application/json",
+                   crossDomain: true,
+                   processData: true,
+                   
+                   
+                   success: function(response){  
+                	   
+                       // we have the response  
+                	   if(response!=null){
+                       var data =JSON.parse(JSON.stringify(response));  
+                        var suggest;
+                	 
+                    	for (var i=0; i < data.length; i++){
+                		    suggest+="<div class="+"\"panel-body\""+">";
+                      		suggest+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png\""+" /></div>";
+                      		suggest+="<a href="+"\"#\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+                      		suggest+="<div class="+"\"text-right\""+">";
+                      		suggest+="<button type="+"\"button\""+" class="+"\"btn btn-primary\""+">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
+                      		suggest+="<a class="+"\"btn btn-primary\""+" id="+"\"remove\""+" href=\"\""+">Remove</a></div></div>";  
+                      		
+                		}
+                	
+                	   $("#suggest").html(suggest);
+                	   
+               
+                       }  
+                       
+                       else
+                    	   {
+                    	  alert("something wrong");
+                    	   }
+                     },
+    	    
+          			error: function(e){  
+            					alert('Error121212: ' + e);  
+            					alert(e.toString());
+          			}				
+            
+    	  }); 
+       	$.ajax({ 
+            url: "http://localhost:8080/DemoFB/webapi/friend/peopleYouMay_KnowMutualFriends",
+            type: "GET",
+            dataType: "json",
+            contentType : "application/json",
+            crossDomain: true,
+            processData: true,
+            
+            
+            success: function(response){  
+         	   
+                // we have the response  
+         	   if(response!=null){
+                var data =JSON.parse(JSON.stringify(response));  
+                 var mayKnow;
+         	 
+             	for (var i=0; i < data.length; i++){
+         		    mayKnow+="<div class="+"\"panel-body\""+">";
+               		mayKnow+="<div class="+"\"pull-left col-sm-3\""+"><img class="+"\"img-responsive\""+"alt="+"\"logo\""+"src="+"\"https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png\""+" /></div>";
+               		mayKnow+="<a href="+"\"#\""+">"+data[i].fname+" "+data[i].lname+"</span></a>";
+               		mayKnow+="<div class="+"\"text-right\""+">";
+               		mayKnow+="<button type="+"\"button\""+" class="+"\"btn btn-primary\""+">Add Friend<span class="+"\"glyphicon glyphicon-plus\""+"></span></button>";
+               		mayKnow+="<a class="+"\"btn btn-primary\""+" id="+"\"remove\""+" href=\"\""+">Remove</a></div></div>";  
+               		
+         		}
+         	
+         	   $("#mayKnow").html(mayKnow);
+        
+                }  
+                
+                else
+             	   {
+             	  alert("something wrong");
+             	   }
+              },
+	    
+   			error: function(e){  
+     					alert('Error121212: ' + e);  
+     					alert(e.toString());
+   			}				
+     
+	  }); 
+
+       	$.ajax({ 
+            url: "http://localhost:8080/DemoFB/webapi/friend/getMyAllFriends",
+            type: "GET",
+            dataType: "json",
+            contentType : "application/json",
+            crossDomain: true,
+            processData: true,
+            
+            
+            success: function(response){  
+         	   
+                // we have the response  
+         	   if(response!=null){
+                var data =JSON.parse(JSON.stringify(response));  
+                 var allFriends;
+         	 
+               
+             	for (var i=0; i < data.length; i++){
+             		 allFriends+="<div class=\"pull-left col-sm-3\"><img class=\"img-responsive\" alt=\"logo\" src=\"https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png\" /></div>";
+                     allFriends+="<div class=\"pull-left col-sm-9\"><a href=\"\">"+data[i].fname+" "+data[i].lname+"</a></div>";
+                     allFriends+="</div></div>";
+         		}
+         	
+         	   $("#allFriends").html(allFriends);
+        
+                }  
+                
+                else
+             	   {
+             	  alert("something wrong");
+             	   }
+              },
+	    
+   			error: function(e){  
+     					alert('Error121212: ' + e);  
+     					alert(e.toString());
+   			}				
+     
+	  });   
+});
 	
 	$("#logoutButton1").click(function(e){
 		  var foo = $.cookie("ID");
@@ -113,6 +241,7 @@ $(document).ready(function() {
 	<div class="pre-scrollable" style="background-color: #d8dfea;height:250px ;margin-bottom:.5cm;margin-top:.5cm">
 	<div class="panel panel-default">
   	<div class="panel-heading" >Friends Suggestion</div>
+  	<!--  
   	<div class="panel-body">
 	
 	<div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
@@ -122,7 +251,10 @@ $(document).ready(function() {
         </div>
 
 	</div><!--end of panel body-->
-	</div><!-end ofpanel panel-default-->
+	  	<div id="suggest"></div>
+  	<p id="suggest"></p>
+	
+	</div><!--  end ofpanel panel-default-->
 
 	</div><!--end of scroll-->
 
@@ -135,6 +267,7 @@ $(document).ready(function() {
 
 	<div class="panel panel-default">
   	<div class="panel-heading" >Friends Request</div>
+  	
   	<div class="panel-body">
 	
 	<div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
@@ -144,7 +277,7 @@ $(document).ready(function() {
         </div>
 
 	</div><!--end of panel body-->
-	</div><!-end ofpanel panel-default-->
+	</div><!-- end ofpanel panel-default-->
        </div><!--end of scroll-->
 
 
@@ -154,7 +287,8 @@ $(document).ready(function() {
 
 	<div class="panel panel-default">
   	<div class="panel-heading" >People you may know</div>
-  	<div class="panel-body">
+  	
+  	<!--  <div class="panel-body">
 	
 	<div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
         <div class="text-right">
@@ -162,32 +296,11 @@ $(document).ready(function() {
         <a class="btn btn-primary" id="remove" href="">Remove</a>
         </div>
 
-	</div><!--end of panel body-->
-
-  	<!--just to show scrolling effect extra two panel added-->
-	<div class="panel-body">
-	
-	<div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
-        <div class="text-right">
-        <button type="button" class="btn btn-primary">Add Friend<span class="glyphicon glyphicon-plus"></span></button>
-        <a class="btn btn-primary" id="remove" href="">Remove</a>
-        </div>
-
-	</div><!--end of panel body-->
-
-	<div class="panel-body">
-	
-	<div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
-        <div class="text-right">
-        <button type="button" class="btn btn-primary">Add Friend<span class="glyphicon glyphicon-plus"></span></button>
-        <a class="btn btn-primary" id="remove" href="">Remove</a>
-        </div>
-
-	</div><!--end of panel body-->	
-
- 	<!--extra two panel ends here-->
-
-	</div><!-end ofpanel panel-default-->
+	</div>
+  	 	<!--extra two panel ends here-->
+	  	<div id="mayKnow"></div>
+  	<p id="mayKnow"></p>
+	</div><!--  -->
 
 	</div><!--end of scroll-->
 
@@ -283,10 +396,12 @@ $(document).ready(function() {
   	<div class="panel-heading" >Friends List</div>
   	<div class="panel-body">
 	
-	<div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
+	<!--  <div class="pull-left col-sm-3"><img class="img-responsive" alt="logo" src="https://cdn4.iconfinder.com/data/icons/miu-flat-social/60/stackoverflow-128.png" /></div>
        <div class="pull-left col-sm-9">Name of the friend</div>
 	</div><!--end of panel body-->
-	</div><!-end ofpanel panel-default-->
+	  	<div id="allFriends"></div>
+  	<p id="allFriends"></p>
+	</div><!--end ofpanel panel-default-->
        </div><!--end of scroll-->
 
 
