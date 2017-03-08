@@ -116,6 +116,7 @@ public class UserResource {
 	@Produces({MediaType.TEXT_PLAIN})
     public String userLogin(User user_obj) throws JsonParseException, JsonMappingException, IOException{
 	
+		System.out.println("loginnnnnn");
 		if(LoginService.loginUserService(user_obj))
 		{
 			System.out.println("retrun id is "+user_obj.getUserID());
@@ -204,9 +205,9 @@ public class UserResource {
 			       .parseClaimsJws(jwt).getBody();
     	System.out.println("Subject: " + claims.getSubject());	
 		String emailID=claims.getSubject();		
-		User u1= RetriveService.getUserAllData(emailID);
+		User u2= RetriveService.getUserAllData(emailID);
 	
-		return u1;
+		return u2;
 	 
     }//retrive method ends here
 	

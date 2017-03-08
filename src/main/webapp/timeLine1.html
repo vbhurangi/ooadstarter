@@ -17,7 +17,201 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	var x=$.cookie("ID");
+	alert('x=      '+x);
+	var obj;
 	//document.write(x);
+	
+	
+	$("#searchFriends").submit(function(e){
+	        e.preventDefault();
+	 });
+	
+
+
+	$("#search").click(function(e){
+		
+		var name=$("input#nameText").val();
+		alert(name);
+		
+		
+		
+		$.ajax({
+    		 type: "POST",
+	        contentType: "text/plain",  //send data to server in this format
+	        url:"http://localhost:8085/DemoFB/webapi/getFriend/getName",
+	        dataType: "json",  //expect response of this type
+	        data: name,
+		
+	        
+	        
+	        success: function(resp){
+	            //alert("succes done");
+	            //alert(data);
+	            
+	            if(resp!=null){
+	            
+	            	
+	            	
+	            obj = JSON.parse(JSON.stringify(resp));
+	            
+	            alert(obj.fname);
+	            	
+	            	
+	            	$('#printName').html(obj.fname);
+	            	/* $('#printName').html(obj.fname+ "  "+"<button  value=\"add\">add friend</button>");
+	            	
+	            	$('#printName button').attr("id","abc");
+	            	alert($('#printName button').attr("id","abc")); */
+	            	$('#add').css({"visibility":"visible"});
+	            	$('#add').val(obj.userID);
+	            	alert($('#add').val());
+	                    	  
+	            }	
+	            else
+	            {
+	            	alert("NOT EXISTS!!! ")
+	            	window.location.replace("timeLine1.html");
+	            }	
+
+	            
+	        },
+	        error: function(jqXHR, textStatus, errorThrown){
+	            alert('System error hai: ' + textStatus);
+	        }
+	    });
+	           	
+	        	
+	        
+	   });// ends
+	   
+	        
+	        
+
+	   $("#add").click(function(e){
+		
+		   alert("x= "+x);
+
+			var fid=$('#add').val();
+			   alert('fid='+fid);
+			$.ajax({
+	    		 type: "POST",
+		        contentType: "text/plain",  //send data to server in this format
+		        url:"http://localhost:8085/DemoFB/webapi/getid/getidval",
+		        dataType: "json",  //expect response of this type
+		        data: x.toString(),
+			
+		        
+		        
+		        success: function(resp){
+		            //alert("succes done");
+		         obj = JSON.parse(JSON.stringify(resp));
+	            var uid=obj.userID;
+	            //alert('userid'+obj.userID);
+	            var statusid=0;
+	            //var initiatorid=obj.userID;
+		           
+		           var obj1 = {"userID":uid,
+		        		   "friendID":fid,"statusID":statusid,"initiatorID":uid,"receiverID":fid};
+		        			
+		        	var myJSON = JSON.stringify(obj1);
+					
+		           
+		          	 $.ajax({
+			    			 type: "POST",
+				    	    contentType: "application/json",  //send data to server in this format
+				    	    url:"http://localhost:8085/DemoFB/webapi/putrequest",
+				    	    dataType: "text/plain",  //expect response of this type
+				        	data:myJSON ,
+					
+				        
+				        
+				        	success: function(resp){
+				            //alert("succes done");
+				           	alert("hey friend request completed");
+				        	},
+				           
+				        	error: function(jqXHR, textStatus, errorThrown){
+				            	alert('System error inside putrequest: ' + textStatus);
+				        	}
+				    	});
+		        },
+		           
+		        error: function(jqXHR, textStatus, errorThrown){
+		            alert('System error inside final : ' + textStatus);
+		        }
+		    });
+		           		
+
+		           		
+		        
+		   });// add ends
+	    
+		   $("#confirm").submit(function(e){
+		        e.preventDefault();
+		 });
+	
+		   $("#seefriend").click(function(e){
+				
+			   //alert("x= "+x);
+
+				//var fid=$('#add').val();
+				   //alert('fid='+fid);
+				$.ajax({
+		    		 type: "POST",
+			        contentType: "text/plain",  //send data to server in this format
+			        url:"http://localhost:8085/DemoFB/webapi/getid/getidval",
+			        dataType: "json",  //expect response of this type
+			        data: x.toString(),
+				
+			        
+			        
+			        success: function(resp){
+			            //alert("succes done");
+			         obj = JSON.parse(JSON.stringify(resp));
+		            var uid=resp.userID;
+		            var obj1 = {"userID":uid};
+		            var myJSON = JSON.stringify(obj1);
+					
+		            //alert('userid'+obj.userID);
+		            var statusid=0;
+		            var initiatorid=obj.userID;
+			           console.log('obj1='+uid);
+			           
+			          	 $.ajax({
+				    			 type: "POST",
+					    	    contentType: "application/json",  //send data to server in this format
+					    	    url:"http://localhost:8085/DemoFB/webapi/getrequest",
+					    	    dataType: "json",  //expect response of this type
+					        	data:myJSON,
+						
+					        
+					        
+					        	success: function(resp){
+					            //alert("succes done");
+					            obj = JSON.parse(JSON.stringify(resp));
+		            
+					            $('#seename').html(obj.userID);
+					           	alert("inside getting request");
+					        	},
+					           
+					        	error: function(jqXHR, textStatus, errorThrown){
+					            	alert('System error inside gettingrequest: ' + textStatus);
+					        	}
+					    	});
+			        },
+			           
+			        error: function(jqXHR, textStatus, errorThrown){
+			            alert('System error inside final of friend : ' + textStatus);
+			        }
+			    });
+			           		
+
+			           		
+			        
+			   });
+		   
+	
+	
 	$("#logoutForm").submit(function(e){
 	        e.preventDefault();
 	 });
@@ -50,11 +244,11 @@ $(document).ready(function() {
 	 });
 	$(function(){
 		var foo = $.cookie("ID");
-		//alert(foo);
+		
              	$.ajax({
              		 type: "GET",
          	        contentType: "text/plain",  //send data to server in this format
-         	        url:"http://localhost:8080/DemoFB/webapi/user/retrive",
+         	        url:"http://localhost:8085/DemoFB/webapi/user/retrive",
          	        dataType: "JSON",  //expect response of this type
          	        data: foo,
 	                   
@@ -118,7 +312,7 @@ $(document).ready(function() {
 	    	    $.ajax({
 	    	        type: "PUT",
 	    	        contentType: "application/json",  //send data to server in this format
-	    	        url:"http://localhost:8080/DemoFB/webapi/user/updateAllData",
+	    	        url:"http://localhost:8085/DemoFB/webapi/user/updateAllData",
 	    	        dataType: "text",  //expect response of this type
 	    	        data: myJSON,
 	    	        success: function(resp){
@@ -186,7 +380,7 @@ $(document).ready(function() {
 	    $.ajax({
 	        type: "DELETE",
 	        contentType: "text/plain",  //send data to server in this format
-	        url:"http://localhost:8080/DemoFB/webapi/user/logout",
+	        url:"http://localhost:8085/DemoFB/webapi/user/logout",
 	        dataType: "text",  //expect response of this type
 	        data: foo,
 	        success: function(resp){
@@ -320,7 +514,7 @@ $(document).ready(function() {
           <button type="button" class="btn btn-primary" id="acq">Acquaintances</button><br>
           <button type="button" class="btn btn-primary" id="family">Family</button><br>
           <button type="button" class="btn btn-primary" id="restricted">Restricted</button><br>
-
+			
         </div>
         </div>
         <!-- inner column ends-->    
@@ -331,6 +525,34 @@ $(document).ready(function() {
 
     </div>
     </form>
+	
+	
+	<form action="#" id="searchFriends">
+	
+	<div>
+	
+	 <input type="text"  id="nameText" style="margin-top:40px">
+	<button type="button" id="search">Search</button>
+	
+	<div id="printName">
+	<br>
+	<br>
+	<br>
+	
+	
+	</div>
+	<button id="add" style="visibility:hidden">add</button>
+	
+	</div>
+	
+	
+	</form>
+
+ <form  action="#" id="confirm">
+<button type="button" id="seefriend">See Friend  Reuest</button>
+<div id="seename"></div>
+<button id="confirmfriend" style="visibility:hidden">Confirm Friend Request</button>
+</form>
 
     </div>
 </nav>
@@ -479,7 +701,7 @@ $(document).ready(function() {
   <div class="modal-dialog" >
 
     <!-- Modal content-->
-<form action="" id="updateInfo">
+    <form action="" id="updateInfo">
     <div class="modal-content">
 
       <div class="modal-header">
@@ -489,6 +711,7 @@ $(document).ready(function() {
       <div class="modal-body">
         <div class="container">
 
+       
         
         <br>
         <div class="form-group">
@@ -523,22 +746,22 @@ $(document).ready(function() {
           <input type="text"  id="highschool" style="margin-left:10px;">
         </div>
              <br>
+                  
        
     </div>
     
 
      
       <div class="modal-footer">
-       <input type="button" id ="updateDetails" class="btn btn-primary" value="Update Info" data-dismiss="modal" >
+       <input type="button" id ="updateDetails" class="btn btn-primary" value="Update Info" data-dismiss="modal" ></button>
        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
-    </div>
-      </div>
-    
-       </form>
-    </div>
-
   </div>
+    </div>
+</form>    
+
+</div>
+</div>
 
 
 
